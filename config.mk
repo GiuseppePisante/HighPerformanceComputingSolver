@@ -1,5 +1,5 @@
 # Supported: GCC, CLANG, ICC
-TAG ?= GCC
+TAG ?= ICX
 ENABLE_OPENMP ?= false
 
 #Feature options
