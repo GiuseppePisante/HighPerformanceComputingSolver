@@ -1,6 +1,6 @@
 #!/bin/bash -l
 #SBATCH --job-name=bench_intranode
-#SBATCH --output=Fritz_ICX_DMVM_intranode
+#SBATCH --output=Fritz_ICX_MultiGrid
 #SBATCH --partition=singlenode
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=72
@@ -14,15 +14,14 @@ module load likwid intel intelmpi
 export I_MPI_PIN=1
 export I_MPI_DEBUG=0
 
-FILENAME="result_bench_intranode.csv"
+FILENAME="Fritz_ICX_MultiGrid.csv"
 
-cd ~/Pampi/ex4/skeleton
+cd ~/HighPerformanceComputingSolver
 make distclean
 make
 
 rm $FILENAME
 touch $FILENAME
-echo "Ranks,IT,N,Time,Omega,Res" >>$FILENAME
 
 _iterate() {
     # Bash Array Definition
@@ -31,24 +30,9 @@ _iterate() {
         np_1=$(($npn - 1))
         export I_MPI_PIN_PROCESSOR_LIST=0-$np_1
 
-        result="$(mpirun -n $npn ./exe-ICC poisson.par)"
+        result="$(srun -n $npn ./exe-ICC dcavity.par)"
         result="$(echo $result | sed 's/MPI startup(): Warning: I_MPI_PMI_LIBRARY will be ignored since the hydra process manager was found //g')"
         
         echo $npn $result >>$FILENAME
     done
 }
-
-
-# Array mit omega Werten
-declare -a omega_values=(1.9 1.8 1.7 1.6 1.5 1.4 1.3 1.2 1.1)
-
-# Für jeden omega Wert
-for omega in "${omega_values[@]}"; do
-    # Ändere omega in der poisson.par Datei
-    sed -i "s/omg.*[0-9.]\+/omg      $omega/" poisson.par
-    
-    # Führe Iteration aus
-    _iterate
-done
-
-sed -i 's/ /,/g' $FILENAME

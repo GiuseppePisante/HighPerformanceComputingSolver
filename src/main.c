@@ -70,7 +70,7 @@ int main(int argc, char** argv)
     end = getTimeStamp();
     stopProgress();
     if (rank == 0) {
-        printf("Solution took %.2fs\n", end - start);
+        printf("%.2fs\n", end - start);
     }
     collectResult(&solver);
 
