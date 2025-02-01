@@ -1,0 +1,29 @@
+### Starting TaskPrologue of job 1769048 on f0376 at Sat Feb  1 18:19:30 CET 2025
+#   SLURM_JOB_NODELIST=f0376
+#   SLURM_JOB_NUM_NODES=1
+#   SLURM_NTASKS=72
+#   SLURM_NPROCS=72
+#   SLURM_TASKS_PER_NODE=72
+#   SLURM_JOB_CPUS_PER_NODE=72
+#   SLURM_EXPORT_ENV=NONE
+Running on cores 0-71 with governor powersave
+### Finished TaskPrologue
+NOTE: If and ONLY IF you want to use likwid-perfctr you have to add '--constraint=hwperf' to your batch jobs.
+      likwid-features and likwid-setFrequencies are not available. The frequency/governor can be set using SLURM features.
+===>  CLEAN
+===>  DIST CLEAN
+===>  COMPILE  build/ICX/timing.o
+mpiicx -c  -D_GNU_SOURCE -DARRAY_ALIGNMENT=64  -I./src -I./build/ICX -O3 -xHost -qopt-zmm-usage=high -std=c99  -Wno-unused-command-line-argument ./src/timing.c -o build/ICX/timing.o
+===>  COMPILE  build/ICX/progress.o
+mpiicx -c  -D_GNU_SOURCE -DARRAY_ALIGNMENT=64  -I./src -I./build/ICX -O3 -xHost -qopt-zmm-usage=high -std=c99  -Wno-unused-command-line-argument ./src/progress.c -o build/ICX/progress.o
+===>  COMPILE  build/ICX/main.o
+mpiicx -c  -D_GNU_SOURCE -DARRAY_ALIGNMENT=64  -I./src -I./build/ICX -O3 -xHost -qopt-zmm-usage=high -std=c99  -Wno-unused-command-line-argument ./src/main.c -o build/ICX/main.o
+===>  COMPILE  build/ICX/solver.o
+mpiicx -c  -D_GNU_SOURCE -DARRAY_ALIGNMENT=64  -I./src -I./build/ICX -O3 -xHost -qopt-zmm-usage=high -std=c99  -Wno-unused-command-line-argument ./src/solver.c -o build/ICX/solver.o
+===>  COMPILE  build/ICX/affinity.o
+mpiicx -c  -D_GNU_SOURCE -DARRAY_ALIGNMENT=64  -I./src -I./build/ICX -O3 -xHost -qopt-zmm-usage=high -std=c99  -Wno-unused-command-line-argument ./src/affinity.c -o build/ICX/affinity.o
+===>  COMPILE  build/ICX/allocate.o
+mpiicx -c  -D_GNU_SOURCE -DARRAY_ALIGNMENT=64  -I./src -I./build/ICX -O3 -xHost -qopt-zmm-usage=high -std=c99  -Wno-unused-command-line-argument ./src/allocate.c -o build/ICX/allocate.o
+===>  COMPILE  build/ICX/parameter.o
+mpiicx -c  -D_GNU_SOURCE -DARRAY_ALIGNMENT=64  -I./src -I./build/ICX -O3 -xHost -qopt-zmm-usage=high -std=c99  -Wno-unused-command-line-argument ./src/parameter.c -o build/ICX/parameter.o
+===>  LINKING  exe-ICX

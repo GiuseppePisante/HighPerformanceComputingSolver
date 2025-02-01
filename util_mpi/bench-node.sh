@@ -30,9 +30,11 @@ _iterate() {
         np_1=$(($npn - 1))
         export I_MPI_PIN_PROCESSOR_LIST=0-$np_1
 
-        result="$(srun -n $npn ./exe-ICC dcavity.par)"
+        result="$(srun -n $npn ./exe-ICX dcavity.par)"
         result="$(echo $result | sed 's/MPI startup(): Warning: I_MPI_PMI_LIBRARY will be ignored since the hydra process manager was found //g')"
         
         echo $npn $result >>$FILENAME
     done
 }
+
+_iterate
