@@ -11,10 +11,6 @@
 
 enum OBJECTBOUNDARY {
     FLUID = 0,
-    TOP,
-    BOTTOM,
-    LEFT,
-    RIGHT,
     TOPLEFT,
     BOTTOMLEFT,
     TOPRIGHT,
@@ -26,13 +22,13 @@ enum SHAPE { NOSHAPE = 0, RECT, CIRCLE };
 
 typedef struct {
     double dx, dy;
-    int imax, jmax;
     double xlength, ylength;
     int* s;
 } Grid;
 
-static inline int gridIsFluid(Grid* g, int i, int j)
-{
-    return g->s[j * (g->imax + 2) + i] == FLUID;
-}
+// ! Modifica
+// static inline int gridIsFluid(Grid* g, int i, int j)
+// {
+//     return g->s[j * (g->imax + 2) + i] == FLUID;
+// }
 #endif // __GRID_H_

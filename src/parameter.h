@@ -1,5 +1,5 @@
 /*
- * Copyright (C)  NHR@FAU, University Erlangen-Nuremberg.
+ * Copyright (C) 2022 NHR@FAU, University Erlangen-Nuremberg.
  * All rights reserved. This file is part of nusif-solver.
  * Use of this source code is governed by a MIT style
  * license that can be found in the LICENSE file.
@@ -10,23 +10,15 @@
 typedef struct {
     double xlength, ylength;
     int imax, jmax;
-    int itermax, levels, presmooth, postsmooth;
-    double eps, omg, rho;
+    int itermax;
+    double eps, omg;
     double re, tau, gamma;
     double te, dt;
     double gx, gy;
     char* name;
     int bcLeft, bcRight, bcBottom, bcTop;
     double u_init, v_init, p_init;
-
-    int numberOfParticles;
-    double startTime, injectTimePeriod, writeTimePeriod;
-
-    double x1, y1, x2, y2;
-
-    int shape;
-    double xCenter, yCenter, xRectLength, yRectLength, circleRadius;
-
+    int levels, presmooth, postsmooth;
 } Parameter;
 
 void initParameter(Parameter*);

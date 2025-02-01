@@ -1,5 +1,5 @@
-CC   = gcc
-GCC  = gcc
+CC   = mpicc
+GCC  = mpicc
 LINKER = $(CC)
 
 ifeq ($(ENABLE_OPENMP),true)
@@ -11,4 +11,4 @@ CFLAGS   = -Ofast -ffreestanding -std=c99 $(OPENMP)
 LFLAGS   = $(OPENMP)
 DEFINES  = -D_GNU_SOURCE
 INCLUDES =
-LIBS     =
+LIBS     = -lm

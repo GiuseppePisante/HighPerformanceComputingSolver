@@ -9,25 +9,13 @@ TAG ?= GCC
 ENABLE_OPENMP ?= false
 
 OPTIONS +=  -DARRAY_ALIGNMENT=64
-#OPTIONS +=  -DVERBOSE
 #OPTIONS +=  -DVERBOSE_AFFINITY
 #OPTIONS +=  -DVERBOSE_DATASIZE
 #OPTIONS +=  -DVERBOSE_TIMER
 ```
 
-The verbosity options enable detailed output about solver, affinity settings, allocation sizes and timer resolution.
-For debugging you may want to set the VERBOSE option:
-```
-# Supported: GCC, CLANG, ICC
-TAG ?= GCC
-ENABLE_OPENMP ?= false
+The verbosity options enable detailed output about affinity settings, allocation sizes and timer resolution.
 
-OPTIONS +=  -DARRAY_ALIGNMENT=64
-OPTIONS +=  -DVERBOSE
-#OPTIONS +=  -DVERBOSE_AFFINITY
-#OPTIONS +=  -DVERBOSE_DATASIZE
-#OPTIONS +=  -DVERBOSE_TIMER
-`
 
 2. Build with:
 ```
@@ -58,21 +46,3 @@ to clean intermediate build results and binary.
 make asm
 ```
 The assembler files will also be located in the `<TOOLCHAIN>` directory.
-
-## Usage
-
-You have to provide a parameter file describing the problem you want to solve:
-```
-./exe-CLANG  dcavity.par
-```
-
-Examples are given in in dcavity (a lid driven cavity test case) and canal (simulating a empty canal).
-
-You can plot the resulting velocity and pressure fields using gnuplot:
-```
-gnuplot vector.plot
-```
-and for the pressure:
-```
-gnuplot surface.plot
-```

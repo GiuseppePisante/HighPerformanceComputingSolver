@@ -1,5 +1,5 @@
 /*
- * Copyright (C)  NHR@FAU, University Erlangen-Nuremberg.
+ * Copyright (C) 2022 NHR@FAU, University Erlangen-Nuremberg.
  * All rights reserved. This file is part of nusif-solver.
  * Use of this source code is governed by a MIT style
  * license that can be found in the LICENSE file.
@@ -14,20 +14,16 @@
 
 void initParameter(Parameter* param)
 {
-    param->xlength    = 1.0;
-    param->ylength    = 1.0;
-    param->imax       = 100;
-    param->jmax       = 100;
-    param->itermax    = 1000;
-    param->eps        = 0.0001;
-    param->omg        = 1.7;
-    param->re         = 100.0;
-    param->gamma      = 0.9;
-    param->tau        = 0.5;
-    param->rho        = 0.99;
-    param->levels     = 5;
-    param->presmooth  = 5;
-    param->postsmooth = 5;
+    param->xlength = 1.0;
+    param->ylength = 1.0;
+    param->imax    = 100;
+    param->jmax    = 100;
+    param->itermax = 1000;
+    param->eps     = 0.0001;
+    param->omg     = 1.7;
+    param->re      = 100.0;
+    param->gamma   = 0.9;
+    param->tau     = 0.5;
 }
 
 void readParameter(Parameter* param, const char* filename)
@@ -65,9 +61,6 @@ void readParameter(Parameter* param, const char* filename)
             PARSE_INT(imax);
             PARSE_INT(jmax);
             PARSE_INT(itermax);
-            PARSE_INT(levels);
-            PARSE_INT(presmooth);
-            PARSE_INT(postsmooth);
             PARSE_REAL(eps);
             PARSE_REAL(omg);
             PARSE_REAL(re);
@@ -85,25 +78,6 @@ void readParameter(Parameter* param, const char* filename)
             PARSE_REAL(u_init);
             PARSE_REAL(v_init);
             PARSE_REAL(p_init);
-            PARSE_REAL(rho);
-
-            /* Added new particle tracing parameters */
-            PARSE_INT(numberOfParticles);
-            PARSE_REAL(startTime);
-            PARSE_REAL(injectTimePeriod);
-            PARSE_REAL(writeTimePeriod);
-            PARSE_REAL(x1);
-            PARSE_REAL(y1);
-            PARSE_REAL(x2);
-            PARSE_REAL(y2);
-
-            /* Added obstacle geometry parameters */
-            PARSE_INT(shape);
-            PARSE_REAL(xCenter);
-            PARSE_REAL(yCenter);
-            PARSE_REAL(xRectLength);
-            PARSE_REAL(yRectLength);
-            PARSE_REAL(circleRadius);
         }
     }
 
@@ -134,18 +108,4 @@ void printParameter(Parameter* param)
     printf("\tepsilon (stopping tolerance) : %f\n", param->eps);
     printf("\tgamma (stopping tolerance) : %f\n", param->gamma);
     printf("\tomega (SOR relaxation): %f\n", param->omg);
-    printf("\trho (SOR relaxation): %f\n", param->rho);
-    printf("\tMultiGrid levels : %d\n", param->levels);
-
-    printf("Particle Tracing data:\n");
-    printf("\tNumber of particles : %d being injected for every period of %.2f\n",
-        param->numberOfParticles,
-        param->injectTimePeriod);
-    printf("\tstartTime : %.2f\n", param->startTime);
-    printf("\t(Line along which the particles are to be injected) \n\tx1 : %.2f, y1 : "
-           "%.2f, x2 : %.2f, y2 : %.2f\n",
-        param->x1,
-        param->y1,
-        param->x2,
-        param->y2);
 }

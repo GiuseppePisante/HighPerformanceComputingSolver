@@ -1,17 +1,14 @@
 /*
- * Copyright (C)  NHR@FAU, University Erlangen-Nuremberg.
+ * Copyright (C) 2022 NHR@FAU, University Erlangen-Nuremberg.
  * All rights reserved.
  * Use of this source code is governed by a MIT-style
  * license that can be found in the LICENSE file.
  */
 #include <errno.h>
-#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "allocate.h"
-
-void* allocate(size_t alignment, size_t bytesize)
+void* allocate(int alignment, size_t bytesize)
 {
     int errorCode;
     void* ptr;

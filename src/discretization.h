@@ -9,7 +9,6 @@
 #include "grid.h"
 #include "parameter.h"
 
-enum BC { NOSLIP = 1, SLIP, OUTFLOW, PERIODIC };
 
 typedef struct {
     /* geometry and grid information */
@@ -30,15 +29,7 @@ typedef struct {
 } Discretization;
 
 extern void initDiscretization(Discretization*, Parameter*);
-extern void computeRHS(Discretization*);
-extern void normalizePressure(Discretization*);
-extern void computeTimestep(Discretization*);
-extern void setBoundaryConditions(Discretization*);
-extern void setSpecialBoundaryCondition(Discretization*);
 extern void setObjectBoundaryCondition(Discretization*);
-extern void computeFG(Discretization*);
-extern void adaptUV(Discretization*);
-extern void writeResult(Discretization*);
 extern void print(Discretization*, double*);
 extern void printGrid(Discretization*, int*);
 #endif

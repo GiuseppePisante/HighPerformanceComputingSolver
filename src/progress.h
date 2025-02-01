@@ -1,5 +1,5 @@
 /*
- * Copyright (C)  NHR@FAU, University Erlangen-Nuremberg.
+ * Copyright (C) 2022 NHR@FAU, University Erlangen-Nuremberg.
  * All rights reserved.
  * Use of this source code is governed by a MIT-style
  * license that can be found in the LICENSE file.
@@ -9,5 +9,6 @@
 
 extern void initProgress(double);
 extern void printProgress(double);
-extern void stopProgress(void);
+extern void stopProgress();
+
 #endif

@@ -1,12 +1,10 @@
-# Supported: GCC, CLANG, ICX
-TAG ?= ICX
+# Supported: GCC, CLANG, ICC
+TAG ?= GCC
 ENABLE_OPENMP ?= false
-# Supported: sor, rb, mg
-SOLVER ?= mg
-# Run in debug settings
-DEBUG ?= false
 
 #Feature options
 OPTIONS +=  -DARRAY_ALIGNMENT=64
 #OPTIONS +=  -DVERBOSE
-#OPTIONS +=  -DDEBUG
+#OPTIONS +=  -DVERBOSE_AFFINITY
+#OPTIONS +=  -DVERBOSE_DATASIZE
+#OPTIONS +=  -DVERBOSE_TIMER

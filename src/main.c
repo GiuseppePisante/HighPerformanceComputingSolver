@@ -1,106 +1,79 @@
 /*
- * Copyright (C)  NHR@FAU, University Erlangen-Nuremberg.
+ * Copyright (C) 2022 NHR@FAU, University Erlangen-Nuremberg.
  * All rights reserved.
  * Use of this source code is governed by a MIT-style
  * license that can be found in the LICENSE file.
  */
+#include <float.h>
+#include <limits.h>
+#include <mpi.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "discretization.h"
 #include "parameter.h"
-#include "particletracing.h"
 #include "progress.h"
 #include "solver.h"
 #include "timing.h"
 
-static FILE* initResidualWriter()
-{
-    FILE* fp;
-    fp = fopen("residual.dat", "w");
-
-    if (fp == NULL) {
-        printf("Error!\n");
-        exit(EXIT_FAILURE);
-    }
-
-    return fp;
-
-}
-
-static void writeResidual(FILE* fp, double ts, double res)
-{
-    fprintf(fp, "%f, %f\n", ts, res);
-}
-
 int main(int argc, char** argv)
 {
-    double timeStart, timeStop;
-    Parameter p;
-    Discretization d;
-    Solver s;
-    ParticleTracer particletracer;
+    int rank = 0;
 
-    initParameter(&p);
-    FILE* fp;
-    fp = initResidualWriter();
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+
+    double start, end;
+    Parameter params;
+    Solver solver;
+
+    initParameter(&params);
 
     if (argc != 2) {
         printf("Usage: %s <configFile>\n", argv[0]);
         exit(EXIT_SUCCESS);
     }
 
-    readParameter(&p, argv[1]);
-    printParameter(&p);
-    initDiscretization(&d, &p);
-    initSolver(&s, &d, &p);
-    initParticleTracer(&particletracer, &d.grid, &p);
-    printParticleTracerParameters(&particletracer);
+    readParameter(&params, argv[1]);
+    
+    if (rank == 0) {
+        printParameter(&params);
+    }
+    initSolver(&solver, &params);
+    
 
-#ifndef VERBOSE
-    initProgress(d.te);
-#endif
-
-    double tau = d.tau;
-    double te  = d.te;
+    double tau = solver.tau;
+    double te  = solver.te;
     double t   = 0.0;
-    int nt     = 0;
-    double res = 0.0;
 
-    timeStart  = getTimeStamp();
-
+    start = getTimeStamp();
     while (t <= te) {
-        if (tau > 0.0) computeTimestep(&d);
-        setBoundaryConditions(&d);
-        setSpecialBoundaryCondition(&d);
-        setObjectBoundaryCondition(&d);
+        if (tau > 0.0) {
+            computeTimestep(&solver);
+        }
 
-        computeFG(&d);
-        computeRHS(&d);
-        if (nt % 100 == 0) normalizePressure(&d);
-        res = solve(&s, d.p, d.rhs);
-        adaptUV(&d);
-        trace(&particletracer, d.u, d.v, d.dt, t);
-
-        writeResidual(fp, t, res);
-
-        t += d.dt;
-        nt++;
+        setBoundaryConditions(&solver);
+        setSpecialBoundaryCondition(&solver);
+        computeFG(&solver);
+        computeRHS(&solver);
+        
+        solve(&solver);
+        adaptUV(&solver);
+        t += solver.dt;
 
 #ifdef VERBOSE
-        printf("TIME %f , TIMESTEP %f\n", t, solver.dt);
-#else
-        printProgress(t);
+        if (rank == 0) {
+            printf("TIME %f , TIMESTEP %f\n", t, solver.dt);
+        }
 #endif
     }
-
-    timeStop = getTimeStamp();
-
-    fclose(fp);
+    end = getTimeStamp();
     stopProgress();
-    freeParticles(&particletracer);
-    printf("Solution took %.2fs\n", timeStop - timeStart);
-    writeResult(&d);
+    if (rank == 0) {
+        printf("Solution took %.2fs\n", end - start);
+    }
+    collectResult(&solver);
+
+    MPI_Finalize();
     return EXIT_SUCCESS;
 }
