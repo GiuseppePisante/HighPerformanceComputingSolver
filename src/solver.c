@@ -320,7 +320,7 @@ static void assembleResult(Solver *solver, double *src, double *dst)
             MPI_Cart_coords(solver->comm, i, NDIMS, coords);
             int starts[NDIMS] = {sum(newSizesJ, i, 1, coords[JDIM]),
                                  sum(newSizesI, i, solver->dims[JDIM], coords[IDIM])};
-            printf(
+            /*printf(
                 "Rank: %d, Coords(i,j): %d %d, Size(i,j): %d %d, Target Size(i,j): %d %d "
                 "Starts(i,j): %d %d\n",
                 i,
@@ -331,7 +331,7 @@ static void assembleResult(Solver *solver, double *src, double *dst)
                 newSizes[CIDIM],
                 newSizes[CJDIM],
                 starts[CIDIM],
-                starts[CJDIM]);
+                starts[CJDIM]);*/
 
             MPI_Type_create_subarray(NDIMS,
                                      oldSizes,

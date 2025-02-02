@@ -35,10 +35,6 @@ int main(int argc, char** argv)
     }
 
     readParameter(&params, argv[1]);
-    
-    if (rank == 0) {
-        printParameter(&params);
-    }
     initSolver(&solver, &params);
     
 
@@ -70,7 +66,7 @@ int main(int argc, char** argv)
     end = getTimeStamp();
     stopProgress();
     if (rank == 0) {
-        printf("%.2fs\n", end - start);
+        printf("%.2f\n", end - start);
     }
     collectResult(&solver);
 
