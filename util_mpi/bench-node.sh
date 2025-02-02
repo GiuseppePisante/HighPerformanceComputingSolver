@@ -23,7 +23,7 @@ make
 rm $FILENAME
 touch $FILENAME
 
-_iterate() {
+function _iterate() {
     # Bash Array Definition
     declare -a process_counts=(1 2 4 8 15 30 40 50 61 72)
     for npn in "${process_counts[@]}"; do
